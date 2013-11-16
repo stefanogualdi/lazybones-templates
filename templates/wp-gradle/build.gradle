@@ -1,0 +1,94 @@
+apply plugin: 'base'
+
+buildscript {
+    repositories {
+        maven { url "http://oss.jfrog.org/repo" }
+        jcenter()
+        maven { url 'http://dl.bintray.com/robfletcher/gradle-plugins' }
+    }
+    dependencies {
+        classpath 'org.gradle.plugins:gradle-compass:1.0.9'
+        classpath 'us.carrclan.david.gradle:gradle-site-plugin:0.1.2'
+        classpath 'de.undercouch:gradle-download-task:0.3'
+    }
+}
+
+version = "0.1"
+
+// Load external properties
+["ftp", "wordpress"].each {
+    file("${it}.properties").withReader { reader ->
+      def props = new Properties()
+      props.load(reader)
+      properties.putAll(props)
+    }
+}
+
+repositories {
+    maven { url "http://oss.jfrog.org/repo" }
+    jcenter()
+}
+
+apply plugin: 'compass'
+
+compass {
+    cssDir = file("${wpSourceBase}/styles")
+    sassDir = file("${wpSourceBase}/sass")
+    imagesDir = file("${wpSourceBase}/images")
+    debugInfo = false
+    quiet = true
+}
+
+compileSass {
+	environment = 'production'
+	debugInfo = false
+	noLineComments = true
+}
+
+clean.dependsOn cleanCompileSass
+
+task watch << {
+	while(true);
+}
+watch.dependsOn watchSass
+
+apply plugin: 'site'
+
+sourceSets {
+    site {
+        resources {
+            srcDir wpSourceBase
+        }
+    }
+}
+
+site {
+    url = "${wpFtpServer}/${wpRemoteDir}"
+    authenticationInfo {
+        userName = wpFtpUsername
+        password = wpFtpPassword
+    }
+}
+processSiteResources.dependsOn compileSass
+
+apply plugin: 'download-task'
+
+task downloadWordpress(type: de.undercouch.gradle.tasks.download.Download) {
+    src "http://wordpress.org/wordpress-${wpVersion}.zip".toString()
+    dest file("${buildDir}/download/wordpress.zip")
+    onlyIfNewer true
+}
+
+task unzipWordpress(type: Copy, dependsOn: [downloadWordpress]) {
+    from zipTree(file("${buildDir}/download/wordpress.zip"))
+    into file("${buildDir}/download")
+}
+
+task installWordpress(type: Copy, dependsOn: [unzipWordpress]) {
+    from file("${buildDir}/download/wordpress")
+    into file("${projectDir}")
+}
+
+wrapper {
+    gradleVersion '1.8'
+}

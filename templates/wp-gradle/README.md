@@ -35,14 +35,12 @@ Tasks
 
 **Per installare una copia locale di wordpress:**
 
-	:::shell
 	./gradlew installWordpress
 
 questo task scarica wordpress ${wordpressVersion} nella working directory rendendo il progetto eseguibile con MAMP.
 
 **Per lanciare il daemon di compass:**
 
-	:::shell
 	./gradlew watch
 
 I sorgenti sass sono in: **${wpTmplPath}/sass**
@@ -51,7 +49,6 @@ I file css vengono generati in: **${wpTmplPath}/styles**
 
 **Per eseguire il deploy sul server FTP:**
 
-	:::shell
 	./gradlew publishSite
 
 Questo task copia tutto il contenuto della cartella **${wpTmplPath}/** sul perorso remoto **${hostingServer}/${hostingHome}/${wpTmplPath}/**

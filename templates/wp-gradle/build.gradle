@@ -18,9 +18,11 @@ version = "0.1"
 // Load external properties
 ["ftp", "wordpress"].each {
     file("${it}.properties").withReader { reader ->
-      def props = new Properties()
-      props.load(reader)
-      properties.putAll(props)
+        def props = new Properties()
+        props.load(reader)
+        props.each { String key, String value ->
+            project.ext.set(key, value)
+        }
     }
 }
 

@@ -57,3 +57,12 @@ I file css vengono generati in: **${wpTmplPath}/styles**
 Questo task copia tutto il contenuto della cartella **${wpTmplPath}/** sul perorso remoto **${hostingServer}/${hostingHome}/${wpTmplPath}/**
 
 Verificare che i dati contenuti nel file **ftp.properties** siano corretti.
+
+Credits
+-------
+
+* [Peter Ledbrook](https://github.com/pledbrook) - Lazybones project
+* [Rob Fletcher](https://github.com/robfletcher) - Gradle compass plugin
+* [David Carr](https://bitbucket.org/davidmc24) - Gradle site plugin
+* [Michel Krämer](https://github.com/michel-kraemer) - Gradle download plugin
+* [Joe Bartlett](https://gist.github.com/jdbartlett/444295) - .gitignore file

@@ -16,10 +16,10 @@ props["hostingUsername"]       = ask("  Define the FTP username [username]: ", "
 props["hostingPassword"]       = ask("  Define the FTP password [password]: ", "passsword", "hostingPassword")
 
 // Customize properties
-filterFiles("gitignore.tmpl", props)
-filterFiles("wordpress.properties", props)
-filterFiles("ftp.properties", props)
-filterFiles("README.md", props)
+processTemplates("gitignore.tmpl", props)
+processTemplates("wordpress.properties", props)
+processTemplates("ftp.properties", props)
+processTemplates("README.md", props)
 
 // Create template dir, sass dir and initial sass file
 new File(targetDir, "${props['wpTmplPath']}/sass").mkdirs()

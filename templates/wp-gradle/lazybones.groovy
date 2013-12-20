@@ -5,7 +5,7 @@ props["baseTemplatePath"]      = "wp-content/themes"
 props["hostingHome"]           = "www"
 
 // Base project
-props["wordpressVersion"]      = ask("Define the wordpress version [3.7.1]: ", "3.7.1", "wordpressVersion")
+props["wordpressVersion"]      = ask("Define the wordpress version [3.8]: ", "3.8", "wordpressVersion")
 props["wordpressTemplateName"] = ask("  Define the wp template name [base]: ", "base", "wordpressTemplateName")
 
 props["wpTmplPath"] = props["baseTemplatePath"] + "/" + props["wordpressTemplateName"]
